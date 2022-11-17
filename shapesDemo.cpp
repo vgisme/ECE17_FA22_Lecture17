@@ -8,21 +8,25 @@ enum class ShapeTypes {Circle, Square, Rectangle};
 class Shape {
 public:
     virtual void draw() = 0;
+    virtual ~Shape() { std::cout << "Deleting a shape\n";};
 };
 
 class Circle : public Shape {
 public:
     void draw() override { std::cout << "Drawing a circle\n";}
+    ~Circle() { std::cout << "Deleting a circle\n"; }
 };
 
 class Square : public Shape {
 public:
     void draw() override { std::cout << "Drawing a square\n";}
+    ~Square() { std::cout << "Deleting a square\n"; }
 };
 
 class Rectangle : public Shape {
 public:
     void draw() override { std::cout << "Drawing a rectangle\n";}
+    ~Rectangle() { std::cout << "Deleting a rectangle\n"; }
 };
 
 class ShapeFactory {
@@ -40,10 +44,11 @@ public:
 };
 
 int main() {
-    std::unique_ptr<Shape> shape;
+    Shape* shape;
     ShapeFactory shapeFactory;
 
-    shape = std::unique_ptr<Shape>(shapeFactory.getShape(ShapeTypes::Square));
+    shape = shapeFactory.getShape(ShapeTypes::Circle);
     shape->draw();
 
+    delete shape;
 }
